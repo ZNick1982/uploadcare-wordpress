@@ -110,10 +110,19 @@ function welcome_screen_content() {
 ?>
     <div class="wrap">
         <h2>Uploadcare Plugin</h2>
-
         <p>
-            Here is a text about this plugin.
+            Uploadcare handles your files so you don't have to.
         </p>
+        <p>
+            Check out some key features:
+        </p>
+        <ul>
+            <li><a href="https://uploadcare.com/documentation/widget/">Uploadcare Widget</a> the ultimate tool for file uploads.</li>
+            <li>Smart <a href="https://uploadcare.com/documentation/cdn/">CDN</a>, delivers your files across 5 continents.</li>
+            <li>Free on-the-fly image processing via <a href="https://uploadcare.com/documentation/cdn/#image-operations">CDN API</a></li>
+        <ul>
+        <p>There's way more to it, actually. Just take a next step.</p>
+        <p><a href="https://uploadcare.com/accounts/create/free/?utm_source=uploadcare&utm_campaign=top&utm_medium=mainpage">Get your free API key</a>, start using Uploadcare <a href="http://kb.uploadcare.com/article/234-uc-project-and-account">in minutes</a> or take a look at the <a href="https://uploadcare.com/documentation/">docs</a></p>
 
         <div id="icon-options-general" class="icon32"><br></div>
         <h2>Let's configure it</h2>
