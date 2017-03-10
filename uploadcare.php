@@ -127,7 +127,7 @@ function welcome_screen_content() {
         <div id="icon-options-general" class="icon32"><br></div>
         <h2>Let's configure it</h2>
 
-        <?php print_base_settings("/wp-admin/options-general.php?page=uploadcare"); ?>
+        <?php print_base_settings("options-general.php?page=uploadcare"); ?>
 
     </div>
 <?php
