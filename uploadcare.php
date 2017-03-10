@@ -65,3 +65,76 @@ function uploadcare_uninstall() {
     $wpdb->query("DROP TABLE IF EXISTS $thetable");
     */
 }
+
+/**
+ * Welcome screen
+ */
+
+register_activation_hook(__FILE__, 'welcome_screen_activate');
+function welcome_screen_activate() {
+    set_transient('_welcome_screen_activation_redirect', true, 30);
+}
+
+add_action('admin_init', 'welcome_screen_do_activation_redirect');
+function welcome_screen_do_activation_redirect() {
+    // Bail if no activation redirect
+    if (!get_transient('_welcome_screen_activation_redirect')) {
+        return;
+    }
+
+    // Delete the redirect transient
+    delete_transient('_welcome_screen_activation_redirect');
+
+    // Bail if activating from network, or bulk
+    if (is_network_admin() || isset($_GET['activate-multi'])) {
+        return;
+    }
+
+    // Redirect to bbPress about page
+    wp_safe_redirect(add_query_arg(array('page' => 'welcome-screen-about'), admin_url('index.php')));
+}
+
+add_action('admin_menu', 'welcome_screen_pages');
+
+function welcome_screen_pages() {
+    add_dashboard_page(
+        'Welcome To Welcome Screen',
+        'Welcome To Welcome Screen',
+        'read',
+        'welcome-screen-about',
+        'welcome_screen_content'
+    );
+}
+
+function welcome_screen_content() {
+?>
+    <div class="wrap">
+        <h2>Uploadcare Plugin</h2>
+        <p>
+            Uploadcare handles your files so you don't have to.
+        </p>
+        <p>
+            Check out some key features:
+        </p>
+        <ul>
+            <li><a href="https://uploadcare.com/documentation/widget/">Uploadcare Widget</a> the ultimate tool for file uploads.</li>
+            <li>Smart <a href="https://uploadcare.com/documentation/cdn/">CDN</a>, delivers your files across 5 continents.</li>
+            <li>Free on-the-fly image processing via <a href="https://uploadcare.com/documentation/cdn/#image-operations">CDN API</a></li>
+        <ul>
+        <p>There's way more to it, actually. Just take a next step.</p>
+        <p><a href="https://uploadcare.com/accounts/create/free/?utm_source=uploadcare&utm_campaign=top&utm_medium=mainpage">Get your free API key</a>, start using Uploadcare <a href="http://kb.uploadcare.com/article/234-uc-project-and-account">in minutes</a> or take a look at the <a href="https://uploadcare.com/documentation/">docs</a></p>
+
+        <div id="icon-options-general" class="icon32"><br></div>
+        <h2>Let's configure it</h2>
+
+        <?php print_base_settings("/wp-admin/options-general.php?page=uploadcare"); ?>
+
+    </div>
+<?php
+}
+
+add_action('admin_head', 'welcome_screen_remove_menus');
+
+function welcome_screen_remove_menus() {
+    remove_submenu_page('index.php', 'welcome-screen-about');
+}
